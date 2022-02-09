@@ -6,10 +6,10 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Component;
 
 /**
- * @Description: yaml配置中心参数
- * @Author: LuoPing
- * @Date: 2022/1/26
- **/
+ * yaml配置中心参数
+ * @author : LuoPing
+ * @date : 2022/1/26
+ */
 @Component
 @Data
 @ConfigurationProperties(prefix = "params")

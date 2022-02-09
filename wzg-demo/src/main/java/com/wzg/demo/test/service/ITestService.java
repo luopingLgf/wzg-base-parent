@@ -3,10 +3,10 @@ package com.wzg.demo.test.service;
 import com.wzg.demo.test.entity.dto.PayDTO;
 
 /**
- * @Description: 测试服务接口
- * @Author: LuoPing
- * @Date: 2022/1/26
- **/
+ * 测试服务接口
+ * @author : LuoPing
+ * @date : 2022/1/26
+ */
 public interface ITestService {
     /**
      * 测试yaml参数

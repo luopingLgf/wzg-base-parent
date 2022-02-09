@@ -9,10 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- * @Description: 测试服务类
- * @Author: LuoPing
- * @Date: 2022/1/26
- **/
+ * 测试服务类
+ * @author : LuoPing
+ * @date : 2022/1/26
+ */
 @Service
 @Slf4j
 public class TestServiceImpl implements ITestService {

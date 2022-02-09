@@ -11,10 +11,10 @@ import java.util.Map;
 import java.util.function.Function;
 
 /**
- * @Description: 支付方式服务类
- * @Author: LuoPing
- * @Date: 2022/2/9
- **/
+ * 支付方式服务类
+ * @author : LuoPing
+ * @date : 2022/2/9
+ */
 @Service
 @Slf4j
 public class PayTypeServiceImpl implements IPayTypeService {

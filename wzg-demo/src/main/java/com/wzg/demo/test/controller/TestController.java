@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * @Description: 测试控制类
- * @Author: LuoPing
- * @Date: 2022/1/26
- **/
+ * 测试控制类
+ * @author : LuoPing
+ * @date : 2022/1/26
+ */
 @RestController
 @RequestMapping("/test")
 public class TestController {

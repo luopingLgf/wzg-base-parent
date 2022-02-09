@@ -12,6 +12,7 @@ import java.util.function.Function;
 
 /**
  * 支付方式服务类
+ *
  * @author : LuoPing
  * @date : 2022/2/9
  */
@@ -35,6 +36,7 @@ public class PayTypeServiceImpl implements IPayTypeService {
 
     /**
      * 根据类型进行支付
+     *
      * @param payDTO
      * @return
      */
@@ -49,6 +51,7 @@ public class PayTypeServiceImpl implements IPayTypeService {
 
     /**
      * 支付方式： 红包
+     *
      * @param payDTO
      * @return
      */
@@ -59,6 +62,7 @@ public class PayTypeServiceImpl implements IPayTypeService {
 
     /**
      * 支付方式： 购物卡
+     *
      * @param payDTO
      * @return
      */
@@ -69,6 +73,7 @@ public class PayTypeServiceImpl implements IPayTypeService {
 
     /**
      * 支付方式： QQ会员
+     *
      * @param payDTO
      * @return
      */

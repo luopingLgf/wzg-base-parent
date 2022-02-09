@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * yaml配置中心参数
+ *
  * @author : LuoPing
  * @date : 2022/1/26
  */

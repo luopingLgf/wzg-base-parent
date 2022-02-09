@@ -1,0 +1,20 @@
+server:
+  port: 18080 #端口
+spring:
+  application:
+    name: wzg-gateway #服务名
+  cloud:
+    nacos:
+      server-addr: ${reg_server_addr:127.0.0.1:8848} #注册中心和配置中心地址，在环境变量配置
+      discovery:
+        namespace: wzg #命名空间
+      config:
+        namespace: wzg #命名空间
+        file-extension: yaml
+        extension-configs:
+          - data-id: comm.yaml
+            refresh: true
+          - data-id: db.yaml
+          - data-id: redis.yaml
+
+

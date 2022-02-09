@@ -9,9 +9,9 @@ spring:
     nacos:
       server-addr: ${reg_server_addr:127.0.0.1:8848} #注册配置中心地址，环境变量中配置
       discovery:
-        namespace: wzg #命名空间
+        namespace: wzg #注册命名空间
       config:
-        namespace: wzg #命名空间
+        namespace: wzg #配置命名空间
         file-extension: yaml
         extension-configs:
           - data-id: comm.yaml

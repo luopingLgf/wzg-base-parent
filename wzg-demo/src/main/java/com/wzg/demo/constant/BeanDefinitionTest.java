@@ -4,7 +4,7 @@ import org.springframework.context.annotation.*;
 import org.springframework.stereotype.Component;
 
 /**
- * @Description: @TODO
+ * @Description: BeanDefinition测试
  * @Author: LuoPing
  * @Date: 2022/2/8
  **/
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 @Scope
 @DependsOn
 @Primary
-public class BeanDefintionTest {
+public class BeanDefinitionTest {
 
     @Bean
     public YamlParams getYamlParams() {

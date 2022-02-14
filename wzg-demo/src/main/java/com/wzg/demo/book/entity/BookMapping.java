@@ -3,6 +3,8 @@ package com.wzg.demo.book.entity;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
+import java.util.List;
+
 /**
  * <p>
  * MapStruct对象转化
@@ -17,22 +19,25 @@ public interface BookMapping {
 
     /**
      * Book dto转po
-     * @param bookDTO DTO对象
-     * @return PO对象
+     *
+     * @param bookDTO BookDTO对象
+     * @return Book对象
      */
-    Book toPO(BookDTO bookDTO);
-
-    /**
-     * Book dto转po
-     * @param bookPageDTO DTO对象
-     * @return PO对象
-     */
-    Book pageToPO(BookPageDTO bookPageDTO);
+    Book dto2PO(BookDTO bookDTO);
 
     /**
      * Book po转vo
-     * @param book PO对象
-     * @return VO对象
+     *
+     * @param book Book对象
+     * @return BookVO对象
      */
-    BookVO toVO(Book book);
+    BookVO po2VO(Book book);
+
+    /**
+     * Book po转pageVO列表
+     *
+     * @param books 书本对象
+     * @return List<BookPageVO>
+     */
+    List<BookPageVO> po2PageVO(List<Book> books);
 }

@@ -16,11 +16,11 @@ import java.util.List;
 @ApiModel("分页出参对象")
 public class PageVO<T> {
     @ApiModelProperty("当前页码")
-    private Integer pageNum;
+    private Long pageNum;
     @ApiModelProperty("每页记录数")
-    private Integer pageSize;
+    private Long pageSize;
     @ApiModelProperty("总数")
-    private Integer total;
+    private Long total;
     @ApiModelProperty("数据")
     private List<T> data;
 
@@ -28,8 +28,11 @@ public class PageVO<T> {
     }
 
     public PageVO(List<T> list) {
+        long size = Integer.toUnsignedLong(list.size());
+        this.pageNum = 1L;
+        this.pageSize = size;
+        this.total = size;
         this.data = list;
-        this.total = list.size();
     }
 
 }

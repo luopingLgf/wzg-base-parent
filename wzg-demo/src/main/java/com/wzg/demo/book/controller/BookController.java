@@ -1,6 +1,5 @@
 package com.wzg.demo.book.controller;
 
-
 import com.wzg.demo.book.entity.*;
 import com.wzg.demo.book.service.IBookService;
 import com.wzg.framework.api.Result;
@@ -45,7 +44,7 @@ public class BookController {
     @GetMapping("/detail")
     public Result<BookVO> detail(@RequestParam Long id) {
         Book book = iBookService.getById(id);
-        BookVO bookVO = BookMapping.INSTANCE.toVO(book);
+        BookVO bookVO = BookMapping.INSTANCE.po2VO(book);
         return Result.success(bookVO);
     }
 

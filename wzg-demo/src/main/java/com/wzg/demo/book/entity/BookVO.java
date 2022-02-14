@@ -1,6 +1,6 @@
 package com.wzg.demo.book.entity;
 
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -36,9 +36,11 @@ public class BookVO implements Serializable {
     private BigDecimal price;
 
     @ApiModelProperty("出版日期")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8",locale = "zh")
     private LocalDateTime pubTime;
 
     @ApiModelProperty("创建日期")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8",locale = "zh")
     private LocalDateTime createTime;
 
     @ApiModelProperty("描述")

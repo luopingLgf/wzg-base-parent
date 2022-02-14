@@ -4,9 +4,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * @author : LuoPing
- * @TODO
- * @date : 2022/1/25
+ * @author LuoPing
+ * @since 2022/1/25
  */
 @SpringBootApplication
 public class WzgGatewayApp {

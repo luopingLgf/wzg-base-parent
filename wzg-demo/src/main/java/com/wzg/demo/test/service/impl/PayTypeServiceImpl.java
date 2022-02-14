@@ -13,8 +13,8 @@ import java.util.function.Function;
 /**
  * 支付方式服务类
  *
- * @author : LuoPing
- * @date : 2022/2/9
+ * @author LuoPing
+ * @since 2022/2/9
  */
 @Service
 @Slf4j
@@ -22,23 +22,23 @@ public class PayTypeServiceImpl implements IPayTypeService {
     /**
      * 函数接口Map
      */
-    private Map<String, Function<PayDTO, String>> payTypeMap = new HashMap<>();
+    private final Map<String, Function<PayDTO, String>> payTypeMap = new HashMap<>();
 
     /**
      * 初始化
      */
     @PostConstruct
     public void initFun() {
-        payTypeMap.put("redPaper", payDTO -> this.redPaper(payDTO));
-        payTypeMap.put("shopping", payDTO -> this.shopping(payDTO));
-        payTypeMap.put("qqVip", payDTO -> this.qqVip(payDTO));
+        payTypeMap.put("redPaper", this::redPaper);
+        payTypeMap.put("shopping", this::shopping);
+        payTypeMap.put("qqVip", this::qqVip);
     }
 
     /**
      * 根据类型进行支付
      *
-     * @param payDTO
-     * @return
+     * @param payDTO xx
+     * @return xx
      */
     @Override
     public String payByType(PayDTO payDTO) {
@@ -52,8 +52,8 @@ public class PayTypeServiceImpl implements IPayTypeService {
     /**
      * 支付方式： 红包
      *
-     * @param payDTO
-     * @return
+     * @param payDTO xx
+     * @return xx
      */
     private String redPaper(PayDTO payDTO) {
         log.info("payId == {}", payDTO.getPayId());
@@ -63,8 +63,8 @@ public class PayTypeServiceImpl implements IPayTypeService {
     /**
      * 支付方式： 购物卡
      *
-     * @param payDTO
-     * @return
+     * @param payDTO xx
+     * @return xx
      */
     private String shopping(PayDTO payDTO) {
         log.info("payId == {}", payDTO.getPayId());
@@ -74,8 +74,8 @@ public class PayTypeServiceImpl implements IPayTypeService {
     /**
      * 支付方式： QQ会员
      *
-     * @param payDTO
-     * @return
+     * @param payDTO xx
+     * @return xx
      */
     private String qqVip(PayDTO payDTO) {
         log.info("payId == {}", payDTO.getPayId());

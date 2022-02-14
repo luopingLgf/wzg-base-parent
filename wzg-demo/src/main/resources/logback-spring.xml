@@ -9,7 +9,6 @@
     <!-- elk日志收集配置 -->
     <springProperty scope="context" name="app.name" source="spring.application.name"/>
     <springProperty scope="context" name="servlet.name" source="server.servlet.context-path"/>
-    <springProperty scope="context" name="elk.destination" source="elk.stash.destination"/>
 
     <!--此处修改日志文件保存的目录-->
     <property name="log.path" value="./logs/${servlet.name}/"/>
@@ -146,8 +145,8 @@
 
     <!--myibatis日志配置-->
     <!--此处为mapper类所在的包-->
-    <springProfile name="default,dev,test,self">
-        <logger name="com.nengchuan" level="DEBUG"/>
+    <springProfile name="default,dev,test,prod">
+        <logger name="com.wzg" level="DEBUG"/>
         <logger name="org.apache.ibatis" level="DEBUG">
             <appender-ref ref="CONSOLE"/>
         </logger>
@@ -156,11 +155,7 @@
         </logger>
     </springProfile>
 
-    <!--    <logger name="com.alibaba.nacos.naming.log.level" level="WARN"/>-->
-    <logger name="org.dozer.DozerInitializer" level="WARN"/>
-    <logger name="org.dozer.jmx.JMXPlatformImpl" level="WARN"/>
-    <logger name="org.dozer.DozerBeanMapper" level="WARN"/>
-    <logger name="org.dozer.config.GlobalSettings" level="WARN"/>
+    <!--<logger name="com.alibaba.nacos.naming.log.level" level="WARN"/>-->
 
     <root level="info">
         <appender-ref ref="CONSOLE"/>

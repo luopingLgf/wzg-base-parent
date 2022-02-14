@@ -5,8 +5,8 @@ import com.wzg.demo.test.entity.dto.PayDTO;
 /**
  * 测试服务接口
  *
- * @author : LuoPing
- * @date : 2022/1/26
+ * @author LuoPing
+ * @since 2022/1/26
  */
 public interface ITestService {
     /**
@@ -17,8 +17,8 @@ public interface ITestService {
     /**
      * Map + 函数式接口 获取不同的支付结果
      *
-     * @param payType
-     * @return
+     * @param payDTO 支付对象
+     * @return 字符串
      */
     String getPayResult(PayDTO payDTO);
 }

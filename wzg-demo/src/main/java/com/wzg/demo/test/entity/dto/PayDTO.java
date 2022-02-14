@@ -6,8 +6,8 @@ import lombok.Data;
 /**
  * 支付入参对象
  *
- * @author : LuoPing
- * @date : 2022/2/9
+ * @author LuoPing
+ * @since 2022/2/9
  */
 @Data
 @Builder

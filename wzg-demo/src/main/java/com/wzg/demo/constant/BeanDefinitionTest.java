@@ -6,8 +6,8 @@ import org.springframework.stereotype.Component;
 /**
  * BeanDefinition测试
  *
- * @author : LuoPing
- * @date : 2022/2/8
+ * @author LuoPing
+ * @since 2022/2/8
  */
 @Component
 @Lazy

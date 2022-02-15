@@ -9,11 +9,11 @@ import com.wzg.demo.book.mapper.BookMapper;
 import com.wzg.demo.book.service.IBookService;
 import com.wzg.framework.constant.BaseConstant;
 import com.wzg.framework.exception.CustomException;
+import com.wzg.framework.mybatis.IdSnowUtils;
 import com.wzg.framework.mybatis.QueryWrapperBuilder;
 import com.wzg.framework.page.PageUtils;
 import com.wzg.framework.page.PageVO;
 import com.wzg.framework.util.CopyUtils;
-import com.wzg.framework.util.IdSnowUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -133,5 +133,17 @@ public class BookServiceImpl extends ServiceImpl<BookMapper, Book> implements IB
             o.setModifyTime(nowTime);
         });
         return this.updateBatchById(books, BaseConstant.BatchSize.BATCH_SIZE_50);
+    }
+
+    /**
+     * 导出书本列表
+     * @param bookPageDTO 查询条件
+     * @return 书本列表
+     */
+    @Override
+    public List<BookExportVO> listExport(BookPageDTO bookPageDTO) {
+        QueryWrapper<Book> queryWrapper = QueryWrapperBuilder.build(bookPageDTO);
+        List<Book> books = baseMapper.selectList(queryWrapper);
+        return BookMapping.INSTANCE.po2ExportVOList(books);
     }
 }

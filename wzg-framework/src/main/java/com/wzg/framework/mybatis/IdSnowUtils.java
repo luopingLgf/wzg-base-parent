@@ -1,4 +1,4 @@
-package com.wzg.framework.util;
+package com.wzg.framework.mybatis;
 
 import lombok.extern.slf4j.Slf4j;
 

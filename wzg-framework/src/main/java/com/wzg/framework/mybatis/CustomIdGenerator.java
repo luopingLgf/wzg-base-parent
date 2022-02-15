@@ -1,7 +1,6 @@
 package com.wzg.framework.mybatis;
 
 import com.baomidou.mybatisplus.core.incrementer.IdentifierGenerator;
-import com.wzg.framework.util.IdSnowUtils;
 import org.springframework.stereotype.Component;
 
 /**

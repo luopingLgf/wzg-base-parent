@@ -1,10 +1,7 @@
 package com.wzg.demo.book.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.wzg.demo.book.entity.Book;
-import com.wzg.demo.book.entity.BookDTO;
-import com.wzg.demo.book.entity.BookPageDTO;
-import com.wzg.demo.book.entity.BookPageVO;
+import com.wzg.demo.book.entity.*;
 import com.wzg.framework.page.PageVO;
 
 import java.util.List;
@@ -52,4 +49,11 @@ public interface IBookService extends IService<Book> {
      * @return 修改成功标志
      */
     Boolean batchUpdateDTOS(List<BookDTO> bookDTOS);
+
+    /**
+     * 导出书本列表
+     * @param bookPageDTO 查询条件
+     * @return 书本列表
+     */
+    List<BookExportVO> listExport(BookPageDTO bookPageDTO);
 }

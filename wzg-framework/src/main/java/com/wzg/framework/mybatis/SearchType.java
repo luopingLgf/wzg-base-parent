@@ -16,9 +16,9 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface SearchType {
-    Type type() default Type.EQ;
-
     String field() default "";
+
+    Type type() default Type.EQ;
 
     enum Type {
         EQ(0),

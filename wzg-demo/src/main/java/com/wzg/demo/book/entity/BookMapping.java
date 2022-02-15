@@ -48,4 +48,12 @@ public interface BookMapping {
      * @return List<BookPageVO>
      */
     List<BookPageVO> po2PageVOList(List<Book> books);
+
+    /**
+     * Book po转exportVO列表
+     *
+     * @param books 书本对象
+     * @return List<BookExportVO>
+     */
+    List<BookExportVO> po2ExportVOList(List<Book> books);
 }

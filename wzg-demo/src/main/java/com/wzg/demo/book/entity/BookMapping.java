@@ -26,6 +26,14 @@ public interface BookMapping {
     Book dto2PO(BookDTO bookDTO);
 
     /**
+     * Book dto列表转po
+     *
+     * @param bookDTOS BookDTO对象列表
+     * @return Book对象列表
+     */
+    List<Book> dto2POList(List<BookDTO> bookDTOS);
+
+    /**
      * Book po转vo
      *
      * @param book Book对象
@@ -39,5 +47,5 @@ public interface BookMapping {
      * @param books 书本对象
      * @return List<BookPageVO>
      */
-    List<BookPageVO> po2PageVO(List<Book> books);
+    List<BookPageVO> po2PageVOList(List<Book> books);
 }

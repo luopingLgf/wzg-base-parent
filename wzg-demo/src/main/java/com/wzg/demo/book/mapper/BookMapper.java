@@ -1,9 +1,7 @@
 package com.wzg.demo.book.mapper;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.wzg.demo.book.entity.Book;
-import org.apache.ibatis.annotations.Mapper;
-import org.mapstruct.factory.Mappers;
+import com.wzg.framework.mybatis.CustomMapper;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -15,6 +13,6 @@ import org.springframework.stereotype.Repository;
  * @since 2022-02-10
  */
 @Repository
-public interface BookMapper extends BaseMapper<Book> {
+public interface BookMapper extends CustomMapper<Book> {
 
 }

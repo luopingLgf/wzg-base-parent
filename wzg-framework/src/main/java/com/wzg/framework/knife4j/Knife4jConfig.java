@@ -1,6 +1,7 @@
 package com.wzg.framework.knife4j;
 
 import cn.hutool.core.collection.CollectionUtil;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -27,6 +28,11 @@ import java.util.List;
 @Configuration
 @Import(BeanValidatorPluginsConfiguration.class)
 public class Knife4jConfig {
+    @Value("${spring.application.name:xx-xxx-service}")
+    private String appName;
+    @Value("${server.servlet.context-path:xxx}")
+    private String contextPath;
+    private static final String BASE_PACKAGE = "com.wzg";
 
     @Bean(value = "defaultApi1")
     public Docket defaultApi1() {
@@ -55,7 +61,7 @@ public class Knife4jConfig {
                 .groupName("默认分组")
                 .select()
                 //这里指定Controller扫描包路径
-                .apis(RequestHandlerSelectors.basePackage("com.wzg"))
+                .apis(RequestHandlerSelectors.basePackage(BASE_PACKAGE))
                 .paths(PathSelectors.any())
                 .build()
                 //.globalRequestParameters(requestParameters)
@@ -75,7 +81,7 @@ public class Knife4jConfig {
                 .groupName("2.测试分组2")
                 .select()
                 //这里指定Controller扫描包路径
-                .apis(RequestHandlerSelectors.basePackage("com.wzg"))
+                .apis(RequestHandlerSelectors.basePackage(BASE_PACKAGE))
                 .paths(PathSelectors.any())
                 .build();
     }
@@ -90,17 +96,17 @@ public class Knife4jConfig {
                 .groupName("3.测试分组3")
                 .select()
                 //这里指定Controller扫描包路径
-                .apis(RequestHandlerSelectors.basePackage("com.wzg"))
+                .apis(RequestHandlerSelectors.basePackage(BASE_PACKAGE))
                 .paths(PathSelectors.any())
                 .build();
     }
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("Knife4j文档~~~！！！")
-                .description("Knife4j RESTFUL APIs")
-                .termsOfServiceUrl("https://www.LuoPing.com/")
-                .contact(new Contact("LuoPing", "https://gitee.com/xiaoymin", "xiaoymin@foxmail.com"))
+                .title(appName + " Knife4j文档~~~！！！")
+                .description(contextPath + " Knife4j RESTFUL APIs")
+                .termsOfServiceUrl("https://www.xiaoymin.com/")
+                .contact(new Contact(BASE_PACKAGE, "https://gitee.com/xiaoymin", "xiaoymin@foxmail.com"))
                 .version("1.0")
                 .build();
     }

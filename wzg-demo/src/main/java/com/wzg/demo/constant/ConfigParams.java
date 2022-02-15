@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 @Data
 @ConfigurationProperties(prefix = "params")
 @RefreshScope
-public class YamlParams {
+public class ConfigParams {
     /**
      * 测试数字
      */

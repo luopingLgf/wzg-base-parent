@@ -1,0 +1,20 @@
+server:
+  port: 17071 #端口
+  servlet:
+    context-path: /generate #根路径
+spring:
+  application:
+    name: wzg-generate #服务名
+  cloud:
+    nacos:
+      server-addr: ${reg_server_addr:127.0.0.1:8848} #注册配置中心地址，环境变量中配置
+      discovery:
+        namespace: wzg #注册命名空间
+      config:
+        namespace: wzg #配置命名空间
+        file-extension: yaml
+        extension-configs:
+          - data-id: comm.yaml
+            refresh: true
+          - data-id: db.yaml
+          - data-id: redis.yaml

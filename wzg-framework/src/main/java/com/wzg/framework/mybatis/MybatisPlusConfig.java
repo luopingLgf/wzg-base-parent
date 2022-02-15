@@ -24,4 +24,9 @@ public class MybatisPlusConfig {
         return interceptor;
     }
 
+    @Bean
+    public CustomSqlInjector customSqlInjector() {
+        return new CustomSqlInjector();
+    }
+
 }

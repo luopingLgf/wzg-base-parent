@@ -10,9 +10,13 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>wzg-framework</module>
+        <module>wzg-generate</module>
         <module>wzg-gateway</module>
         <module>wzg-demo</module>
-        <module>wzg-framework</module>
+        <module>wzg-demo-sdk</module>
+        <module>wzg-system</module>
+        <module>wzg-system-sdk</module>
     </modules>
 
     <properties>

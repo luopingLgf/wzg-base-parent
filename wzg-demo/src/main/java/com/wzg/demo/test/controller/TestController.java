@@ -5,6 +5,7 @@ import com.wzg.demo.test.service.ITestService;
 import com.wzg.framework.api.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/test")
 @Api(tags = "测试demo")
+@Slf4j
 public class TestController {
     private final ITestService iTestService;
 
@@ -29,6 +31,7 @@ public class TestController {
     @ApiOperation("测试获取yaml参数")
     @GetMapping("/testYamlParams")
     public Result<Void> testYamlParams() {
+        int i = 1 / 0;
         iTestService.testYamlParams();
         return Result.success();
     }

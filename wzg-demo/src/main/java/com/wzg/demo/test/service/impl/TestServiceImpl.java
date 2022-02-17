@@ -1,6 +1,6 @@
 package com.wzg.demo.test.service.impl;
 
-import com.wzg.demo.constant.ConfigParams;
+import com.wzg.demo.constant.DemoYaml;
 import com.wzg.demo.test.entity.dto.PayDTO;
 import com.wzg.demo.test.service.IPayTypeService;
 import com.wzg.demo.test.service.ITestService;
@@ -17,11 +17,11 @@ import org.springframework.stereotype.Service;
 @Service
 @Slf4j
 public class TestServiceImpl implements ITestService {
-    private final ConfigParams yamlParams;
+    private final DemoYaml yamlParams;
     private final IPayTypeService iPayTypeService;
     private final RedisService redisService;
 
-    public TestServiceImpl(ConfigParams yamlParams, IPayTypeService iPayTypeService, RedisService redisService) {
+    public TestServiceImpl(DemoYaml yamlParams, IPayTypeService iPayTypeService, RedisService redisService) {
         this.yamlParams = yamlParams;
         this.iPayTypeService = iPayTypeService;
         this.redisService = redisService;

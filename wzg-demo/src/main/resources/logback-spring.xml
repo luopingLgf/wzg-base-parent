@@ -8,10 +8,9 @@
                     converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter"/>
     <!-- elk日志收集配置 -->
     <springProperty scope="context" name="app.name" source="spring.application.name"/>
-    <springProperty scope="context" name="servlet.name" source="server.servlet.context-path"/>
 
     <!--此处修改日志文件保存的目录-->
-    <property name="log.path" value="./logs/${servlet.name}/"/>
+    <property name="log.path" value="../logs/${app.name}/"/>
     <property name="CONSOLE_LOG_PATTERN"
               value="${CONSOLE_LOG_PATTERN:-%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"/>
 
@@ -41,7 +40,7 @@
                 <maxFileSize>100MB</maxFileSize>
             </timeBasedFileNamingAndTriggeringPolicy>
             <!--日志文件保留天数-->
-            <maxHistory>15</maxHistory>
+            <maxHistory>7</maxHistory>
         </rollingPolicy>
         <!-- 此日志文件只记录debug级别的 -->
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
@@ -130,19 +129,6 @@
         </filter>
     </appender>
 
-    <!-- elk日志收集配置
-    <appender name="stash" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
-        <destination>${elk.destination}</destination>
-        <encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashEncoder">
-            <customFields>{"appname":"${app.name}"}</customFields>
-        </encoder>
-        <filter class="ch.qos.logback.classic.filter.LevelFilter">
-            <level>ERROR</level>
-            <onMatch>ACCEPT</onMatch>
-            <onMismatch>DENY</onMismatch>
-        </filter>
-    </appender> -->
-
     <!--myibatis日志配置-->
     <!--此处为mapper类所在的包-->
     <springProfile name="default,dev,test,prod">
@@ -163,6 +149,5 @@
         <appender-ref ref="INFO_FILE"/>
         <appender-ref ref="WARN_FILE"/>
         <appender-ref ref="ERROR_FILE"/>
-        <!--        <appender-ref ref="stash"/>-->
     </root>
 </configuration>

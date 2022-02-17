@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.List;
 import java.util.Set;
 
@@ -34,8 +37,9 @@ public class ExceptionControllerAdvice {
      */
     @ExceptionHandler(Exception.class)
     public Result<?> exceptionHandler(Exception ex) {
-        ex.printStackTrace();
-        return Result.fail(ResultCode.ERR_500.getCode(), ResultCode.ERR_500.getMsg(), ex.getMessage());
+        this.logStackMsg(ex);
+        Integer code = ResultCode.ERR_500.getCode();
+        return Result.fail(code, code + "-" + ResultCode.ERR_500.getMsg(), ex.getMessage());
     }
 
     /**
@@ -46,7 +50,7 @@ public class ExceptionControllerAdvice {
      */
     @ExceptionHandler(CustomException.class)
     public Result<String> customExceptionHandler(CustomException ex) {
-        ex.printStackTrace();
+        this.logStackMsg(ex);
         return Result.fail(ResultCode.ERR_500.getCode(), ex.getMessage());
     }
 
@@ -58,8 +62,9 @@ public class ExceptionControllerAdvice {
      */
     @ExceptionHandler(NullPointerException.class)
     public Result<String> missParamExceptionHandler(NullPointerException ex) {
-        ex.printStackTrace();
-        return Result.fail(ResultCode.ERR_NULL.getCode(), ResultCode.ERR_NULL.getMsg(), ex.getMessage());
+        this.logStackMsg(ex);
+        Integer code = ResultCode.ERR_NULL.getCode();
+        return Result.fail(code, code + "-" + ResultCode.ERR_NULL.getMsg(), ex.getMessage());
     }
 
     /**
@@ -70,8 +75,9 @@ public class ExceptionControllerAdvice {
      */
     @ExceptionHandler(MissingServletRequestParameterException.class)
     public Result<String> missParamExceptionHandler(MissingServletRequestParameterException ex) {
-        ex.printStackTrace();
-        return Result.fail(ResultCode.ERR_PARAM.getCode(), ResultCode.ERR_PARAM.getMsg(), "缺少参数：" + ex.getParameterName());
+        this.logStackMsg(ex);
+        Integer code = ResultCode.ERR_PARAM.getCode();
+        return Result.fail(code, code + "-" + ResultCode.ERR_PARAM.getMsg(), "缺少参数：" + ex.getParameterName());
     }
 
     /**
@@ -82,8 +88,9 @@ public class ExceptionControllerAdvice {
      */
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public Result<String> missParamExceptionHandler(HttpMessageNotReadableException ex) {
-        ex.printStackTrace();
-        return Result.fail(ResultCode.ERR_PARAM.getCode(), ResultCode.ERR_PARAM.getMsg(), ex.getMessage());
+        this.logStackMsg(ex);
+        Integer code = ResultCode.ERR_PARAM.getCode();
+        return Result.fail(code, code + "-" + ResultCode.ERR_PARAM.getMsg(), ex.getMessage());
     }
 
     /**
@@ -94,13 +101,14 @@ public class ExceptionControllerAdvice {
      */
     @ExceptionHandler(ConstraintViolationException.class)
     public Result<String> paramExceptionHandler(ConstraintViolationException ex) {
-        ex.printStackTrace();
+        this.logStackMsg(ex);
         Set<ConstraintViolation<?>> constraintViolations = ex.getConstraintViolations();
         StringBuilder stringBuilder = new StringBuilder();
         for (ConstraintViolation<?> constraintViolation : constraintViolations) {
             stringBuilder.append(constraintViolation.getMessage()).append("\n");
         }
-        return Result.fail(ResultCode.ERR_PARAM.getCode(), ResultCode.ERR_PARAM.getMsg(), stringBuilder.toString());
+        Integer code = ResultCode.ERR_PARAM.getCode();
+        return Result.fail(code, code + "-" + ResultCode.ERR_PARAM.getMsg(), stringBuilder.toString());
     }
 
     /**
@@ -111,14 +119,35 @@ public class ExceptionControllerAdvice {
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public Result<String> paramExceptionHandler(MethodArgumentNotValidException ex) {
-        ex.printStackTrace();
+        this.logStackMsg(ex);
         BindingResult result = ex.getBindingResult();
         final List<FieldError> fieldErrors = result.getFieldErrors();
         StringBuilder stringBuilder = new StringBuilder();
         for (FieldError error : fieldErrors) {
             stringBuilder.append(error.getDefaultMessage()).append("\n");
         }
-        return Result.fail(ResultCode.ERR_PARAM.getCode(), ResultCode.ERR_PARAM.getMsg(), stringBuilder.toString());
+        Integer code = ResultCode.ERR_PARAM.getCode();
+        return Result.fail(code, code + "-" + ResultCode.ERR_PARAM.getMsg(), stringBuilder.toString());
+    }
+
+    /**
+     * 记录异常的栈日志
+     *
+     * @param ex 异常类
+     * @return void
+     */
+    private void logStackMsg(Exception ex) {
+        try (StringWriter sw = new StringWriter();
+             PrintWriter pw = new PrintWriter(sw)) {
+            ex.printStackTrace(pw);
+            pw.flush();
+            sw.flush();
+            if (sw != null) {
+                log.error("\r\n" + sw.toString());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

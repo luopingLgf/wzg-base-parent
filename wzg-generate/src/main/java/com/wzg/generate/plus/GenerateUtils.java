@@ -16,7 +16,8 @@ public class GenerateUtils {
 
     public static void main(String[] args) {
         // 使用Freemarker引擎模板，默认的是Velocity引擎模板
-        FastAutoGenerator.create("jdbc:mysql://127.0.0.1:3306/wzg_demo?serverTimezone=GMT%2B8&useUnicode=true&useSSL=false&characterEncoding=utf8", "root", "root@321")
+        FastAutoGenerator.create("jdbc:mysql://127.0.0.1:3306/wzg_base_demo?serverTimezone=GMT%2B8&useUnicode=true&useSSL=false&characterEncoding=utf8",
+                        "wzg", "wzg@321")
                 .globalConfig(builder -> {
                     builder.author("LuoPing") // 设置作者
                             .enableSwagger() // 开启 swagger 模式

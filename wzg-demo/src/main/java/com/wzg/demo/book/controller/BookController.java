@@ -47,7 +47,7 @@ public class BookController {
     @PostMapping("/batchSave")
     public Result<Boolean> save(@RequestBody List<BookDTO> bookDTOS) {
         Boolean r = iBookService.batchSaveDTO(bookDTOS);
-        return r ? Result.success() : Result.fail("保存失败");
+        return r ? Result.success() : Result.fail("批量保存失败");
     }
 
     @ApiOperationSupport(order = 3)
@@ -91,7 +91,7 @@ public class BookController {
     @PostMapping("/batchUpdate")
     public Result<Boolean> batchUpdate(@RequestBody List<BookDTO> bookDTOS) {
         Boolean r = iBookService.batchUpdateDTOS(bookDTOS);
-        return r ? Result.success() : Result.fail("修改失败");
+        return r ? Result.success() : Result.fail("批量修改失败");
     }
 
     @ApiOperationSupport(order = 7)

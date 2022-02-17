@@ -1,8 +1,8 @@
-package com.wzg.generate.plus;
+package com.wzg.generate.util;
 
 import com.baomidou.mybatisplus.generator.FastAutoGenerator;
 import com.baomidou.mybatisplus.generator.config.OutputFile;
-import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
+import com.baomidou.mybatisplus.generator.engine.VelocityTemplateEngine;
 
 import java.util.Collections;
 
@@ -16,7 +16,7 @@ public class GenerateUtils {
 
     public static void main(String[] args) {
         // 使用Freemarker引擎模板，默认的是Velocity引擎模板
-        FastAutoGenerator.create("jdbc:mysql://127.0.0.1:3306/wzg_base_demo?serverTimezone=GMT%2B8&useUnicode=true&useSSL=false&characterEncoding=utf8",
+        FastAutoGenerator.create("jdbc:mysql://127.0.0.1:3306/wzg_base_generate?serverTimezone=GMT%2B8&useUnicode=true&useSSL=false&characterEncoding=utf8",
                         "wzg", "wzg@321")
                 .globalConfig(builder -> {
                     builder.author("LuoPing") // 设置作者
@@ -30,7 +30,7 @@ public class GenerateUtils {
                 }).strategyConfig(builder -> {
                     builder.addInclude("t_book") // 设置需要生成的表名
                             .addTablePrefix("t_", "c_"); // 设置过滤表前缀
-                }).templateEngine(new FreemarkerTemplateEngine())
+                }).templateEngine(new VelocityTemplateEngine())
                 .execute();
     }
 

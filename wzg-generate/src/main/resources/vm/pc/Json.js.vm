@@ -1,0 +1,62 @@
+#foreach($column in $columns)
+#if(!$column.superColumn && !$column.pk && ${column.dictType} != '')
+import dictJson from "@/dict/Dict"
+#break
+#end
+#end
+
+const ${businessName}Json = {
+  btnList: [
+    {
+      label: '新增',
+      action: 'add',
+      icon: 'el-icon-document-add',
+      authCode: ['${moduleName}:${className}:save']
+    }, {
+      label: '删除',
+      action: 'del',
+      icon: 'el-icon-delete',
+      authCode: ['${moduleName}:${className}:deleteById']
+    }, {
+      label: '导出',
+      action: 'export',
+      icon: 'el-icon-download',
+      authCode: ['${moduleName}:${className}:exportData']
+    }
+  ],
+  tableColumns: [
+#foreach($column in $columns)
+#set($javaField=$column.javaField)
+#set($parentheseIndex=$column.columnComment.indexOf("（"))
+#if($parentheseIndex != -1)
+#set($comment=$column.columnComment.substring(0, $parentheseIndex))
+#else
+#set($comment=$column.columnComment)
+#end
+#if($column.pk)
+    { label: '${comment}', name: '${javaField}' },
+#elseif($column.list && $column.htmlType == "datetime")
+    { label: '${comment}', name: '${javaField}', type: 'datetime' },
+#elseif($column.list && "" != $column.dictType)
+    { label: '${comment}', name: '${javaField}', type: 'flag', dictObj: dictJsonTransferDictObj(dictJson.$column.dictType)  },
+#elseif($column.list && "" != $javaField)
+    { label: '${comment}', name: '${javaField}' },
+#end
+#end
+  ]
+}
+#foreach($column in $columns)
+#if(!$column.superColumn && !$column.pk && ${column.dictType} != '')
+function dictJsonTransferDictObj(dictJson) {
+  if (!Array.isArray(dictJson)) return {}
+  return dictJson.map(dict => {
+          return { [dict.value]: dict.label }
+      }).reduce((acc, item) => {
+      return { ...acc, ...item }
+  }, {})
+}
+#break
+#end
+#end
+
+export default ${businessName}Json

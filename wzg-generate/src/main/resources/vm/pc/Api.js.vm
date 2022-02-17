@@ -1,0 +1,64 @@
+import request from '@/utils/request'
+
+// 分页查询 ${functionName}
+export function listPage(query) {
+  return request({
+    url: '/${moduleName}/${className}/listPage',
+    method: 'post',
+    data: query
+  })
+}
+
+// 根据ID查询 ${functionName}
+export function getDetail(objId) {
+  return request({
+    url: '/${moduleName}/${className}/getId?id=' + objId,
+    method: 'get'
+  })
+}
+
+// 保存 ${functionName}
+export function save(data) {
+  return request({
+    url: '/${moduleName}/${className}/save',
+    method: 'post',
+    data
+  })
+}
+
+// 根据ID修改 ${functionName}
+export function edit(data) {
+  return request({
+    url: '/${moduleName}/${className}/updById',
+    method: 'post',
+    data
+  })
+}
+
+// 根据ID删除 ${functionName}
+export function del(data) {
+  return request({
+    url: '/${moduleName}/${className}/deleteById',
+    method: 'post',
+    data
+  })
+}
+
+// 批量删除 ${functionName}
+export function delByIds(data) {
+  return request({
+    url: '/${moduleName}/${className}/deleteByIds',
+    method: 'post',
+    data
+  })
+}
+
+// 导出 ${functionName}
+export function exportData(data) {
+  return request({
+    url: '/${moduleName}/${className}/exportData',
+    method: 'post',
+    data,
+    responseType: 'blob'
+  })
+}

@@ -1,0 +1,17 @@
+const dictJson = {
+#foreach($dictType in $!allDict.entrySet())
+#set($type=$dictType.key)
+#set($dicts=$dictType.value)
+    $!{type} : [
+#foreach($dict in $dicts)
+        { label: '${dict.dictLabel}', value: '${dict.dictValue}' }#if($velocityCount != $dicts.size()),
+#end
+#end
+
+    ]#if($velocityCount != $!allDict.entrySet().size()),
+#end
+#end
+
+}
+
+export default dictJson

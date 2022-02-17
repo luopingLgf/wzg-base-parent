@@ -1,0 +1,266 @@
+<template>
+  <div>
+    <el-form ref="${businessName}" :model="formData" size="small" :rules="rules">
+      <el-row :gutter="20">
+#foreach($column in $columns)
+#set($field=$column.javaField)
+#if($column.isInsert && !$column.superColumn && !$column.pk)
+#if(($column.usableColumn) || (!$column.superColumn))
+#set($parentheseIndex=$column.columnComment.indexOf("（"))
+#if($parentheseIndex != -1)
+#set($comment=$column.columnComment.substring(0, $parentheseIndex))
+#else
+#set($comment=$column.columnComment)
+#end
+#set($dictType=$column.dictType)
+#if($column.htmlType == "input" && $column.javaType == 'String')
+        <el-col :xs="20" :sm="10" :md="10" :lg="8" :xl="6">
+           <el-form-item label-width="100px" label="${comment}" prop="${field}">
+            <el-input v-model="formData.${field}" placeholder="请输入${comment}" clearable maxlength="200"/>
+           </el-form-item>
+        </el-col>
+#elseif($column.htmlType == "textarea")
+        <el-col :xs="20" :sm="10" :md="10" :lg="8" :xl="6">
+           <el-form-item label-width="100px" label="${comment}" prop="${field}">
+            <el-input
+               type="textarea"
+               v-model="formData.${field}"
+               placeholder="请输入${comment}"
+               clearable
+               maxlength="200"
+               show-word-limit
+            />
+           </el-form-item>
+        </el-col>
+#elseif($column.htmlType == "select" && $dictType)
+        <el-col :xs="20" :sm="10" :md="10" :lg="8" :xl="6">
+           <el-form-item label-width="100px" label="${comment}" prop="${field}">
+            <nc-select
+                v-model="formData"
+                :item="${field}Item"
+                :props-obj="{value: 'value', label: 'label'}">
+            </nc-select>
+           </el-form-item>
+        </el-col>
+#elseif($column.htmlType == "radio" && "" != $dictType)
+        <el-col :xs="20" :sm="10" :md="10" :lg="8" :xl="6">
+           <el-form-item label-width="100px" label="${comment}" prop="${field}">
+            <el-radio-group v-model="formData.${field}">
+                <el-radio
+                   v-for="dict in ${field}Options"
+                   :key="dict.dictValue"
+                   :label="dict.dictLabel"
+                >{{dict.dictLabel}}
+                </el-radio>
+            </el-radio-group>
+           </el-form-item>
+        </el-col>
+#elseif($column.htmlType == "datetime")
+#if($column.queryType == 'BETWEEN')
+            <el-col :xs="20" :sm="12" :md="12" :lg="10" :xl="8">
+                <el-form-item label-width="100px" label="${comment}">
+                    <el-date-picker
+                            align="right"
+                            style="width: 100%"
+                            v-model="${column.javaField}Time"
+                            type="datetimerange"
+                            range-separator="至"
+                            end-placeholder="请选择结束时间"
+                            start-placeholder="请选择开始时间"
+                            format="yyyy-MM-dd HH:mm:ss"
+                            value-format="yyyy-MM-dd HH:mm:ss"
+                            :default-time="['00:00:00', '23:59:59']">
+                    </el-date-picker>
+                </el-form-item>
+            </el-col>
+#else
+        <el-col :xs="20" :sm="10" :md="10" :lg="8" :xl="6">
+           <el-form-item label-width="100px" label="${comment}" prop="${field}">
+            <el-date-picker clearable size="small" style="width: 200px"
+                            v-model="formData.${field}"
+                            type="date"
+                            value-format="yyyy-MM-dd"
+                            placeholder="选择${comment}">
+            </el-date-picker>
+           </el-form-item>
+        </el-col>
+#end
+#elseif($column.htmlType == "input")
+        <el-col :xs="20" :sm="10" :md="10" :lg="8" :xl="6">
+          <el-form-item label-width="100px" label="${comment}" prop="${field}">
+            <el-input v-model="formData.${field}" type="number" placeholder="请输入${comment}" maxlength="20" clearable/>
+          </el-form-item>
+        </el-col>
+#end
+#end
+#end
+#end
+      </el-row>
+    </el-form>
+
+    <nc-submit
+      :showSave="false"
+      v-show="['add', 'info'].includes(opt.action)"
+      @on-submit="handleSubmit">
+    </nc-submit>
+  </div>
+</template>
+
+<script>
+  import {edit, getDetail, save} from "@/api/";
+  import {NcSelect, NcSubmit} from '@/components/weight/index'
+  import ${businessName}Mixin from './js/'
+
+  export default {
+    name: "${businessName}Dialog",
+    mixins: [ ${businessName}Mixin ],
+    components: {
+#foreach($column in $columns)
+#if($column.isQuery && !$column.superColumn && !$column.pk && $column.htmlType == "select")
+      NcSelect,
+#break
+#end
+#end
+      NcSubmit
+    },
+    props: {
+      id: {
+        type: [String, Number],
+        default: ''
+      },
+      title: {
+        type: String,
+        default: '新增'
+      },
+      form: {
+        type: Object,
+        default: () => {}
+      },
+      opt: {
+        type: Object,
+        default: () => {
+          return {
+            action: 'add'
+          }
+        }
+      }
+    },
+    data() {
+      return {
+        formData: {
+#foreach ($column in $columns)
+#if($column.isInsert == '1' && !$column.superColumn && !$column.pk)
+          $column.javaField: ''#if($velocityCount != $columns.size()), // ${column.columnComment}
+#end
+#end
+#end
+
+        },
+#foreach($column in $columns)
+#if($column.isInsert == '1' && !$column.superColumn && !$column.pk && $column.htmlType == "datetime" && $column.queryType == 'BETWEEN')
+        ${column.javaField}Time: [], // ${column.columnComment}
+#end
+#end
+        rules: {
+#foreach($column in $columns)
+#set($field=$column.javaField)
+#if($column.isInsert && !$column.pk && $column.isRequired == '1')
+#if(($column.usableColumn) || (!$column.superColumn))
+#set($parentheseIndex=$column.columnComment.indexOf("（"))
+#if($parentheseIndex != -1)
+#set($comment=$column.columnComment.substring(0, $parentheseIndex))
+#else
+#set($comment=$column.columnComment)
+#end
+#set($dictType=$column.dictType)
+#if($column.htmlType == "input" && $column.javaType == 'String' )
+          ${field}: [
+            { required: true, message: '请输入${comment}', trigger: 'blur' },
+            { message: '请输入${comment}', trigger: 'change' }
+          ],
+#elseif($column.htmlType == "input" && ($column.javaType == "Integer" || $column.javaType == "Long"))
+          ${field}: [
+            { required: true, message: '请输入${comment}'},
+            { type: 'number', message: '${comment}必须为数字'}
+          ],
+#elseif($column.htmlType == "textarea")
+          ${field}: [
+            { required: true, message: '请输入${comment}', trigger: 'blur' },
+            { message: '请输入${comment}', trigger: 'change' }
+          ],
+#elseif($column.htmlType == "select" && "" != $dictType)
+          ${field}:  [
+            { required: true, message: '请选择${comment}', trigger: 'change' }
+          ],
+#elseif($column.htmlType == "datetime")
+          ${field}:  [
+            { required: true, message: "请选择${comment}" }
+          ]
+#end
+#end
+#end
+#end
+        }
+      }
+    },
+    mounted() {
+      this.initData()
+    },
+    methods: {
+      /** 初始数据 */
+      initData() {
+        if (this.opt.action === 'info') {
+          getDetail(this.id).then(res => {
+            if (res.code === 200) {
+              this.formData = Object.assign({}, res.data)
+            }
+          })
+        }
+      },
+      /** 提交 */
+      handleSubmit() {
+        const loading = this.$loading({
+          lock: true,
+          text: '正在保存',
+          spinner: 'el-icon-loading',
+          background: 'rgba(255, 255, 255, 0.7)'
+        })
+        const flag = []
+        this.$refs.${businessName}.validate(valid => flag.push(valid))
+        if (flag.every((item) => !!item)) {
+          const fn = this.opt.action === 'add' ? save : edit
+          if (this.opt.action === 'info') this.opt.label = '修改'
+          const params = Object.assign({}, this.formData#foreach($column in $columns)#if($column.isInsert == '1' && !$column.superColumn && !$column.pk && $column.htmlType == "datetime" && $column.queryType == 'BETWEEN')#set($AttrName=$column.javaField.substring(0,1).toUpperCase() + ${column.javaField.substring(1)}), this.addDateRange(this.formData, this.${column.javaField}Time, 'begin$AttrName', 'end$AttrName')#end#end)
+          fn(params).then(res => {
+              if (res.code === 200) {
+                  this.$notify({
+                      message: `${this.opt.label}成功`,
+                      type: 'success'
+                  })
+              } else {
+                 this.$notify({
+                     message: res.msg || '提交失败，请稍后再试',
+                     type: 'error'
+                 })
+              }
+              loading.close()
+              this.$emit('close')
+            }
+          ).catch(() => console.error(
+            loading.close()
+          ));
+        } else {
+          this.$notify({
+              message: '存在必填项未填写',
+              type: 'error'
+          })
+          loading.close()
+        }
+      }
+    }
+  }
+</script>
+
+<style scoped>
+
+</style>

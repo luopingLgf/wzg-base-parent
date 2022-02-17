@@ -1,0 +1,106 @@
+package ${packageName}.controller;
+
+import cn.hutool.core.collection.CollectionUtil;
+import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
+import ${packageName}.entity.*;
+import ${packageName}.service.I${className}Service;
+import com.wzg.framework.api.Result;
+import com.wzg.framework.excel.ExcelUtils;
+import com.wzg.framework.exception.CustomException;
+import com.wzg.framework.page.PageVO;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.List;
+        
+/**
+ * <p>
+ * ${commentName} API接口类
+ * </p>
+ *
+ * @author ${author}
+ * @since ${datetime}
+ */
+@RestController
+@RequestMapping("/${entityName}")
+@Api(tags = "${commentName}API接口类")
+public class ${className}Controller {
+    private final I${className}Service i${className}Service;
+
+    public ${className}Controller(I${className}Service i${className}Service) {
+        this.i${className}Service = i${className}Service;
+    }
+
+    @ApiOperationSupport(order = 1)
+    @ApiOperation("${commentName}-保存")
+    @PostMapping("/save")
+    public Result<Long> save(@RequestBody ${className}DTO ${entityName}DTO) {
+        Long id = i${className}Service.saveDTO(${entityName}DTO);
+        return Result.success(id);
+    }
+
+    @ApiOperationSupport(order = 2)
+    @ApiOperation("${commentName}-批量保存")
+    @PostMapping("/batchSave")
+    public Result<Boolean> save(@RequestBody List<${className}DTO> ${entityName}DTOS) {
+        Boolean r = i${className}Service.batchSaveDTO(${entityName}DTOS);
+        return r ? Result.success() : Result.fail("批量保存失败");
+    }
+
+    @ApiOperationSupport(order = 3)
+    @ApiOperation("${commentName}-分页列表")
+    @PostMapping("/page")
+    public Result<PageVO<${className}PageVO>> page(@RequestBody ${className}PageDTO ${entityName}PageDTO) {
+        PageVO<${className}PageVO> ${entityName}PageVO = i${className}Service.pageVO(${entityName}PageDTO);
+        return Result.success(${entityName}PageVO);
+    }
+
+    @ApiOperationSupport(order = 4)
+    @ApiOperation("${commentName}-查看详情")
+    @GetMapping("/detail")
+    public Result<${className}VO> detail(@RequestParam Long id) {
+        ${className} ${entityName} = i${className}Service.getById(id);
+        ${className}VO ${entityName}VO = ${className}Mapping.INSTANCE.po2VO(${entityName});
+        return Result.success(${entityName}VO);
+    }
+
+    @ApiOperationSupport(order = 5)
+    @ApiOperation("${commentName}-修改")
+    @PostMapping("/update")
+    public Result<Boolean> update(@RequestBody ${className}DTO ${entityName}DTO) {
+        Boolean r = i${className}Service.updateDTO(${entityName}DTO);
+        return r ? Result.success() : Result.fail("修改失败");
+    }
+
+    @ApiOperationSupport(order = 5)
+    @ApiOperation("${commentName}-批量删除")
+    @PostMapping("/batchDelete")
+    public Result<Boolean> batchDelete(@RequestBody List<Long> ids) {
+        if (CollectionUtil.isEmpty(ids)) {
+            throw new CustomException("请选择需要删除的记录");
+        }
+        Boolean r = i${className}Service.removeBatchByIds(ids);
+        return r ? Result.success() : Result.fail("删除失败");
+    }
+
+    @ApiOperationSupport(order = 6)
+    @ApiOperation("${commentName}-批量修改")
+    @PostMapping("/batchUpdate")
+    public Result<Boolean> batchUpdate(@RequestBody List<${className}DTO> ${entityName}DTOS) {
+        Boolean r = i${className}Service.batchUpdateDTOS(${entityName}DTOS);
+        return r ? Result.success() : Result.fail("批量修改失败");
+    }
+
+    @ApiOperationSupport(order = 7)
+    @ApiOperation("${commentName}-导出")
+    @PostMapping("/export")
+    public void export(@RequestBody ${className}PageDTO ${entityName}PageDTO, HttpServletResponse response) throws IOException {
+        List<${className}ExportVO> ${entityName}ExportVOS = i${className}Service.listExport(${entityName}PageDTO);
+        ExcelUtils<${className}ExportVO> excelUtils = new ExcelUtils<>(${className}ExportVO.class);
+        excelUtils.exportExcel(response, ${entityName}ExportVOS, "${commentName}");
+    }
+    
+}

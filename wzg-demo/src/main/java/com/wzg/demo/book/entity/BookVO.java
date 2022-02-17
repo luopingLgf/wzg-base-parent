@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -18,6 +20,8 @@ import java.time.LocalDateTime;
  * @since 2022-02-10
  */
 @Data
+@EqualsAndHashCode(callSuper = false)
+@Accessors(chain = true)
 @ApiModel(value = "BookVO对象", description = "BookVO对象")
 public class BookVO implements Serializable {
 

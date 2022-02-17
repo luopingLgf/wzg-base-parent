@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -20,6 +22,8 @@ import java.time.LocalDateTime;
  * @since 2022-02-10
  */
 @Data
+@EqualsAndHashCode(callSuper = false)
+@Accessors(chain = true)
 @TableName("t_book")
 @ApiModel(value = "Book对象", description = "书本表")
 public class Book implements Serializable {

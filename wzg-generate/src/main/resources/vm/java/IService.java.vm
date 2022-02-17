@@ -1,0 +1,60 @@
+package ${packageName}.service;
+
+import com.baomidou.mybatisplus.extension.service.IService;
+import ${packageName}.entity.*;
+import com.wzg.framework.page.PageVO;
+
+import java.util.List;
+
+/**
+ * <p>
+ * ${commentName}服务类
+ * </p>
+ *
+ * @author ${author}
+ * @since ${datetime}
+ */
+public interface I${className}Service extends IService<${className}> {
+    /**
+     * 保存${commentName}对象
+     * @param ${entityName}DTO dto对象
+     * @return ${commentName}主键
+     */
+    Long saveDTO(${className}DTO ${entityName}DTO);
+
+    /**
+     * 批量保存${commentName}列表
+     * @param ${entityName}DTOS
+     * @return
+     */
+    Boolean batchSaveDTO(List<${className}DTO> ${entityName}DTOS);
+
+    /**
+     * 分页查询${commentName}
+     * @param ${entityName}PageDTO 查询对象
+     * @return 分页列表
+     */
+    PageVO<${className}PageVO> pageVO(${className}PageDTO ${entityName}PageDTO);
+
+    /**
+     * 修改${commentName}对象
+     * @param ${entityName}DTO dto对象
+     * @return 修改成功标志
+     */
+    Boolean updateDTO(${className}DTO ${entityName}DTO);
+
+    /**
+     * 批量修改${commentName}列表
+     * @param ${entityName}DTOS dto对象列表
+     * @return 修改成功标志
+     */
+    Boolean batchUpdateDTOS(List<${className}DTO> ${entityName}DTOS);
+
+    /**
+     * 导出${commentName}列表
+     * @param ${entityName}PageDTO 查询条件
+     * @return ${commentName}列表
+     */
+    List<${className}ExportVO> listExport(${className}PageDTO ${entityName}PageDTO);
+
+}

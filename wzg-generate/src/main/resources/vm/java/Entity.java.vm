@@ -1,0 +1,43 @@
+package ${packageName}.entity;
+
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
+import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
+/**
+ * <p>
+ * ${commentName}PO对象
+ * </p>
+ *
+ * @author ${author}
+ * @since ${datetime}
+ */
+@Data
+@EqualsAndHashCode(callSuper = false)
+@Accessors(chain = true)
+@TableName("${tableName}")
+@ApiModel(value = "${className}对象", description = "${commentName}表")
+public class ${className} implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+#foreach ($column in $columns)
+    @ApiModelProperty("${column.columnComment}")
+    #if($column.primaryKey == '1')
+    @TableId("${column.columnName}")
+    #elseif($column.logicDelete)
+    @TableLogic
+    #end
+    private $column.javaType $column.javaField;
+
+#end
+}

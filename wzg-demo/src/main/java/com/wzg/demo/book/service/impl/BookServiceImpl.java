@@ -132,7 +132,8 @@ public class BookServiceImpl extends ServiceImpl<BookMapper, Book> implements IB
             o.setModifyId(accountId);
             o.setModifyTime(nowTime);
         });
-        return this.updateBatchById(books, BaseConstant.BatchSize.BATCH_SIZE_50);
+        boolean b = this.updateBatchById(books, BaseConstant.BatchSize.BATCH_SIZE_50);
+        return b;
     }
 
     /**
@@ -146,4 +147,5 @@ public class BookServiceImpl extends ServiceImpl<BookMapper, Book> implements IB
         List<Book> books = baseMapper.selectList(queryWrapper);
         return BookMapping.INSTANCE.po2ExportVOList(books);
     }
+
 }

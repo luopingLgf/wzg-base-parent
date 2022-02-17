@@ -1,0 +1,142 @@
+package ${packageName}.service.impl;
+
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import ${packageName}.entity.*;
+import ${packageName}.mapper.${className}Mapper;
+import ${packageName}.service.I${className}Service;
+import com.wzg.framework.constant.BaseConstant;
+import com.wzg.framework.exception.CustomException;
+import com.wzg.framework.mybatis.IdSnowUtils;
+import com.wzg.framework.mybatis.QueryWrapperBuilder;
+import com.wzg.framework.page.PageUtils;
+import com.wzg.framework.page.PageVO;
+import com.wzg.framework.util.CopyUtils;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+/**
+ * <p>
+ * ${commentName}服务实现类
+ * </p>
+ *
+ * @author ${author}
+ * @since ${datetime}
+ */
+@Service
+@Slf4j
+public class ${className}ServiceImpl extends ServiceImpl<${className}Mapper, ${className}> implements I${className}Service {
+    /**
+     * 保存${commentName}对象
+     *
+     * @param ${entityName}DTO ${commentName}dto对象
+     * @return ${commentName}对象ID
+     */
+    @Override
+    public Long saveDTO(${className}DTO ${entityName}DTO) {
+        ${className} ${entityName} = ${className}Mapping.INSTANCE.dto2PO(${entityName}DTO);
+        ${entityName}.setCreateId(10002L);
+        ${entityName}.setCreateTime(LocalDateTime.now());
+        int r = baseMapper.insert(${entityName});
+        if (r != 1) {
+            throw new CustomException("保存失败");
+        }
+        return ${entityName}.getId();
+    }
+
+    /**
+     * 批量保存${commentName}列表
+     *
+     * @param ${entityName}DTOS
+     * @return 保存结果
+     */
+    @Override
+    public Boolean batchSaveDTO(List<${className}DTO> ${entityName}DTOS) {
+        long s = System.currentTimeMillis();
+        List<${className}> ${entityName}s = ${className}Mapping.INSTANCE.dto2POList(${entityName}DTOS);
+        ${className} ${entityName} = ${entityName}s.get(0);
+        int size = 100000;
+        List<${className}> ${entityName}CopyList = new ArrayList<>(size);
+        for (int i = 0; i < size; i++) {
+            ${className} clone = CopyUtils.serialClone(${entityName});
+            clone.setTitle(clone.getTitle() + i);
+            clone.setAuthor(clone.getAuthor() + i);
+            clone.setPrice(clone.getPrice().add(new BigDecimal(new Random().nextInt(100))));
+            ${entityName}CopyList.add(clone);
+        }
+        long e = System.currentTimeMillis();
+        log.info("批量保存消耗时间：{} 毫秒！", e - s);
+        return ${entityName}DTOS.size() == column;
+    }
+
+    /**
+     * 分页查询
+     *
+     * @param ${entityName}PageDTO 查询对象
+     * @return 分页列表
+     */
+    @Override
+    public PageVO<${className}PageVO> pageVO(${className}PageDTO ${entityName}PageDTO) {
+        QueryWrapper<${className}> queryWrapper = QueryWrapperBuilder.build(${entityName}PageDTO);
+        IPage<${className}> iPage = baseMapper.selectPage(new Page<>(${entityName}PageDTO.getPageNum(), ${entityName}PageDTO.getPageSize()), queryWrapper);
+        return PageUtils.toPageVO(iPage, ${className}Mapping.INSTANCE::po2PageVOList);
+    }
+
+    /**
+     * 修改${commentName}对象
+     *
+     * @param ${entityName}DTO ${commentName}dto对象
+     * @return 更新结果
+     */
+    @Override
+    public Boolean updateDTO(${className}DTO ${entityName}DTO) {
+        ${className} ${entityName} = ${className}Mapping.INSTANCE.dto2PO(${entityName}DTO);
+        ${entityName}.setModifyId(10001L);
+        ${entityName}.setModifyTime(LocalDateTime.now());
+        int update = baseMapper.updateById(${entityName});
+        return update == 1;
+    }
+
+    /**
+     * 批量修改${commentName}列表
+     *
+     * @param ${entityName}DTOS dto对象列表
+     * @return 修改成功标志
+     */
+    @Override
+    public Boolean batchUpdateDTOS(List<${className}DTO> ${entityName}DTOS) {
+        long s = System.currentTimeMillis();
+        List<${className}> ${entityName}s = ${className}Mapping.INSTANCE.dto2POList(${entityName}DTOS);
+        Long accountId = 10001L;
+        LocalDateTime nowTime = LocalDateTime.now();
+        ${entityName}s.stream().forEach(o -> {
+            o.setModifyId(accountId);
+            o.setModifyTime(nowTime);
+        });
+        boolean b = this.updateBatchById(${entityName}s, BaseConstant.BatchSize.BATCH_SIZE_50);
+        long e = System.currentTimeMillis();
+        log.info("批量修改消耗时间：{} 毫秒！", e - s);
+        return b;
+    }
+
+    /**
+     * 导出${commentName}列表
+     * @param ${entityName}PageDTO 查询条件
+     * @return ${commentName}列表
+     */
+    @Override
+    public List<${className}ExportVO> listExport(${className}PageDTO ${entityName}PageDTO) {
+        QueryWrapper<${className}> queryWrapper = QueryWrapperBuilder.build(${entityName}PageDTO);
+        List<${className}> ${entityName}s = baseMapper.selectList(queryWrapper);
+        return ${className}Mapping.INSTANCE.po2ExportVOList(${entityName}s);
+    }
+
+}

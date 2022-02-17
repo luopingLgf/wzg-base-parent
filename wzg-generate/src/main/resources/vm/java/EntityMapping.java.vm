@@ -1,0 +1,59 @@
+package ${packageName}.entity;
+
+import org.mapstruct.Mapper;
+import org.mapstruct.factory.Mappers;
+
+import java.util.List;
+
+/**
+ * <p>
+ * ${commentName}MapStruct对象转化
+ * </p>
+ *
+ * @author ${author}
+ * @since ${datetime}
+ */
+@Mapper
+public interface ${className}Mapping {
+    ${className}Mapping INSTANCE = Mappers.getMapper(${className}Mapping.class);
+
+    /**
+     * ${className} dto转po
+     *
+     * @param ${entityName}DTO ${className}DTO对象
+     * @return ${className}对象
+     */
+    ${className} dto2PO(${className}DTO ${entityName}DTO);
+
+    /**
+     * ${className} dto列表转po
+     *
+     * @param ${entityName}DTOS ${className}DTO对象列表
+     * @return ${className}对象列表
+     */
+    List<${className}> dto2POList(List<${className}DTO> ${entityName}DTOS);
+
+    /**
+     * ${className} po转vo
+     *
+     * @param ${entityName} ${className}对象
+     * @return ${className}VO对象
+     */
+    ${className}VO po2VO(${className} ${entityName});
+
+    /**
+     * ${className} po转pageVO列表
+     *
+     * @param ${entityName}s 书本对象
+     * @return List<${className}PageVO>
+     */
+    List<${className}PageVO> po2PageVOList(List<${className}> ${entityName}s);
+
+    /**
+     * ${className} po转exportVO列表
+     *
+     * @param ${entityName}s 书本对象
+     * @return List<${className}ExportVO>
+     */
+    List<${className}ExportVO> po2ExportVOList(List<${className}> ${entityName}s);
+}
